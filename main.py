@@ -54,21 +54,30 @@ class program(App):
 
     def converte(self,args):
         num=self.text_input.text
+        t=0
         if self.converttype==1:
-            num=list(num)
             for i in range(len(num)):
-                num[i]=self.roman_true[num[i]]
-            for i in range(len(num)-1):
-                if abs(num[i])<abs(num[i+1]):num[i]=-num[i]
-            ansver=str(sum(num))
+                if num[i] not in ['I','V','L','M','C','D','X']:t=1
+            if t==0:
+                num=list(num)
+                for i in range(len(num)):
+                    num[i]=self.roman_true[num[i]]
+                for i in range(len(num)-1):
+                    if abs(num[i])<abs(num[i+1]):num[i]=-num[i]
+                ansver=str(sum(num))
+            else:ansver='Введено некоректні дані'
         else:
-            num=int(num)
-            ansver=''
-            b=[1000,900,500,400,100,90,50,40,10,9,5,4,1]
-            for i in b:
-                while num>=i:
-                    ansver+=(self.roman_false[i])
-                    num-=i
+            for i in range(len(num)):
+                if num[i] not in [0,1,2,3,4,5,6,7,8,9]:t=1
+            if t==0:
+                num=int(num)
+                ansver=''
+                b=[1000,900,500,400,100,90,50,40,10,9,5,4,1]
+                for i in b:
+                    while num>=i:
+                        ansver+=(self.roman_false[i])
+                        num-=i
+            else:ansver='Введено некоректні дані'
         self.text.text=ansver
 
 
